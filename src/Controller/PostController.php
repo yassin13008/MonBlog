@@ -13,12 +13,13 @@ class PostController extends AbstractController
     public function index($slug, PostRepository $postRepo): Response
     {
 
-        $post = $postRepo->find($slug);
-        // dd($post);
+
+        $post = $postRepo->findBySlug($slug);
+
 
 
         return $this->render('post/index.html.twig', [
-            'post' => $post,
+            'post' => $post[0],
         ]);
     }
 }
