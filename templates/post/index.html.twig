@@ -33,7 +33,7 @@
 				<div class="card mb-3">
 					<div class="card-body">
 						<h4 class="card-title">Ajouté par
-							{{ comment.user }}
+							{{ comment.user.firstname }} {{ comment.user.lastname}}
 							le
 							{{ comment.createdAt|date("d/m/Y", 'Europe/Paris') }}
 							à
@@ -46,15 +46,21 @@
 		</ul>
 	{% endif %}
 
-	<div class="card mb-3">
-		<div class="card-body">
-			{{ form_start(form) }}
-			{{ form_widget(form) }}
-			<input type="submit" value="Envoyer" class="btn btn-primary">
-			{{ form_end(form) }}
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-		</div>
-	</div>
+		<!-- Formulaire d'ajout de commentaire -->
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<input type="submit" value="Envoyer" class="btn btn-primary my-3">
+		{{ form_end(form) }}
+
+	{% else %}
+		<p>Pour poster un commentaire,
+			<a href="{{ path('security.login') }}">
+				connectez-vous</a>
+			ou
+			<a href="#">créez un compte</a>.</p>
+	{% endif %}
 
 	<a href=" {{ path('home.index')}}">Retour à l'acceuil
 	</a>

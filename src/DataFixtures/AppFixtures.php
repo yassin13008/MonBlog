@@ -13,11 +13,13 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+      UserFactory::new()->createMany(10);
+      UserFactory::new()->createOne(['email' => 'user@gmail.com']);
       CategoryFactory::new()->createMany(5);
       PostFactory::new()->createMany(10);
       CommentFactory::new()->createMany(50);
-      UserFactory::new()->createMany(10);
-      UserFactory::new()->createOne(['email' => 'user@gmail.com']);
+      
+
       $manager->flush();
     }
 }

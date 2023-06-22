@@ -21,13 +21,15 @@ class PostController extends AbstractController
     
        if ($form->isSubmitted() && $form->isValid()) {
     
-           $comment = $form->getData();
-           $comment->setPost($post);
+        $comment = $form->getData();
+        $comment->setPost($post);
+        
+        $comment->setUser($this->getUser());
+        
+        $manager->persist($comment);
+        $manager->flush();
     
-           $manager->persist($comment);
-           $manager->flush();
-    
-           $this->addFlash('success', 'Votre commentaire est créé.');
+           $this->addFlash('success', 'Votre commentaire a été ajouté.');
     
            return $this->redirect($request->headers->get('referer'));
        }

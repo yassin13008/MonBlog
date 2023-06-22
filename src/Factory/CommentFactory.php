@@ -3,9 +3,11 @@
 namespace App\Factory;
 
 use App\Entity\Comment;
-use App\Repository\CommentRepository;
-use Zenstruck\Foundry\ModelFactory;
+use App\Entity\User;
+use App\Factory\UserFactory;
 use Zenstruck\Foundry\Proxy;
+use Zenstruck\Foundry\ModelFactory;
+use App\Repository\CommentRepository;
 use Zenstruck\Foundry\RepositoryProxy;
 
 /**
@@ -46,17 +48,17 @@ final class CommentFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-       $datetimeObject = self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris');
-
-       $datetimeImmutableObject = \DateTimeImmutable::createFromMutable($datetimeObject);
+       $datetime = self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris');
+       $datetimeImmutable = \DateTimeImmutable::createFromMutable($datetime);
     
-            return [
-                'user' => self::faker()->name(),
-                'content' => self::faker()->text(250),
-                'createdAt' => $datetimeImmutableObject,
-                'post' => PostFactory::random()
-            ];
+       return [
+           'user' => UserFactory::random(),
+           'content' => self::faker()->text(250),
+           'createdAt' => $datetimeImmutable,
+           'post' => PostFactory::random()
+       ];
     }
+    
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
