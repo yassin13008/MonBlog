@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,12 +55,17 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+       $this->flashbag->add('success', 'Connexion réussie');
+    
        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
            return new RedirectResponse($targetPath);
        }
     
-       return new RedirectResponse($this->urlGenerator->generate('home.index'));
+       $route = $token->getUser()->hasRole('ROLE_ADMIN') ? 'admin.index' : 'home.index';
+    
+       return new RedirectResponse($this->urlGenerator->generate($route));
     }
+    
     
 
     public function supports(Request $request): bool
