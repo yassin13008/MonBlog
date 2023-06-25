@@ -18,8 +18,8 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'security.login')]
     public function login(AuthenticationUtils $utils): Response
     {
-        $lastEmail = $utils->getLastUsername();
-        $form = $this->formFactory->createNamed('', LoginType::class, ['email' => $lastEmail]);
+       $lastEmail = $utils->getLastUsername();
+       $form = $this->formFactory->createNamed('', LoginType::class, ['email' => $lastEmail]);
        $error = $utils->getLastAuthenticationError();
     
        return $this->render('security/login.html.twig', [

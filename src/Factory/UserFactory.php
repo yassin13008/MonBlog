@@ -47,13 +47,18 @@ final class UserFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+       $datetime = self::faker()->dateTimeBetween('-3 years', 'now', 'Europe/Paris');
+       $datetimeImmutable = \DateTimeImmutable::createFromMutable($datetime);
+    
        return [
            'firstname' => self::faker()->firstName,
            'lastname' => self::faker()->lastName,
            'email' => self::faker()->email,
-           'hash' => 'password'
+           'hash' => 'password',
+           'createdAt' => $datetimeImmutable,
        ];
     }
+    
     
 
     /**

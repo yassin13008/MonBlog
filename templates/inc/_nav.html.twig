@@ -19,12 +19,14 @@
    {% else %}
 
        <!-- Menu utilisateur mode déconnecté -->
+       <ul>
        <li class="nav-item">
            <a class="nav-link" href="{{ path('security.login') }}">Connexion</a>
        </li>
        <li class="nav-item">
-           <a class="nav-link" href="#">Créer un compte</a>
+           <a class="nav-link" href="{{ path('user.signup')}}">Créer un compte</a>
        </li>
+       </ul>
 
    {% endif %}
 </ul>
